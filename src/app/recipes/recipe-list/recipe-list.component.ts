@@ -3,8 +3,22 @@ import { Recipe } from '../recipes.model';
 
 @Component({
   selector: 'app-recipe-list',
-  templateUrl: './recipe-list.component.html',
-  styleUrls: ['./recipe-list.component.css']
+  template: `
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="btn btn-success">New Recipe</button>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-xs-12">
+        <app-recipe-item *ngFor="let recipeEl of recipes" [recipe]="recipeEl" (recipeSelected)="onRecipeSelected(recipeEl)"></app-recipe-item>
+      </div>
+    </div>
+  `,
+  styles: [`
+  
+  `]
 })
 export class RecipeListComponent implements OnInit {
   // Only store Recipe objects in array

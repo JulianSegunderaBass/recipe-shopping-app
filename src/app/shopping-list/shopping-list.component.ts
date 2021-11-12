@@ -3,8 +3,20 @@ import { Ingredient } from '../shared/ingredient.model';
 
 @Component({
   selector: 'app-shopping-list',
-  templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.css']
+  template: `
+    <div class="row">
+      <div class="col-xs-10">
+        <app-shopping-edit (ingredientAdded)="onIngredientAdded($event)"></app-shopping-edit>
+        <hr>
+        <ul class="list-group">
+          <a class="list-group-item" style="cursor: pointer;" *ngFor="let ingredient of ingredients">{{ ingredient.name }} {{ ingredient.amount }}</a>
+        </ul>
+      </div>
+    </div>
+  `,
+  styles: [`
+  
+  `]
 })
 export class ShoppingListComponent implements OnInit {
   ingredients: Ingredient[] = [

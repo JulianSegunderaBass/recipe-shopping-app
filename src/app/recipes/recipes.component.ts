@@ -3,8 +3,22 @@ import { Recipe } from './recipes.model';
 
 @Component({
   selector: 'app-recipes',
-  templateUrl: './recipes.component.html',
-  styleUrls: ['./recipes.component.css']
+  template: `
+    <div class="row">
+      <div class="col-md-5">
+          <app-recipe-list (recipeWasSelected)="selectedRecipe = $event"></app-recipe-list>
+      </div>
+      <div class="col-md-7">
+          <app-recipe-detail *ngIf="selectedRecipe; else infoText" [recipe]="selectedRecipe"></app-recipe-detail>
+          <ng-template #infoText>
+              <p>Please select a recipe</p>
+          </ng-template>
+      </div>
+    </div>
+  `,
+  styles: [`
+    
+  `]
 })
 export class RecipesComponent implements OnInit {
   selectedRecipe: Recipe;
