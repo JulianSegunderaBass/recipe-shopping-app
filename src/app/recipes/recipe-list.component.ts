@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RecipeService } from '../shared/services/recipe.service';
 import { Recipe } from './recipes.model';
 
 @Component({
@@ -12,7 +13,7 @@ import { Recipe } from './recipes.model';
     <hr>
     <div class="row">
       <div class="col-xs-12">
-        <app-recipe-item *ngFor="let recipeEl of recipes" [recipe]="recipeEl" (recipeSelected)="onRecipeSelected(recipeEl)"></app-recipe-item>
+        <app-recipe-item *ngFor="let recipeEl of recipes" [recipe]="recipeEl"></app-recipe-item>
       </div>
     </div>
   `,
@@ -22,19 +23,16 @@ import { Recipe } from './recipes.model';
 })
 export class RecipeListComponent implements OnInit {
   // Only store Recipe objects in array
-  recipes: Recipe[] = [
-    new Recipe('Adobong Manok', 'Recipe for Adobong Manok', 'https://www.unileverfoodsolutions.com.ph/dam/global-ufs/mcos/SEA/calcmenu/recipes/PH-recipes/chicken-&-other-poultry-dishes/adobo/main-header.jpg'),
-    new Recipe('Pancit Canton', 'Recipe for Pancit Canton', 'https://www.foxyfolksy.com/wp-content/uploads/2019/02/pancit-canton-640.jpg'),
-  ];
-  @Output() recipeWasSelected = new EventEmitter<Recipe>();
+  recipes: Recipe[];
 
-  onRecipeSelected(recipe: Recipe) {
-    this.recipeWasSelected.emit(recipe);
-  }
-
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
+    this.recipes = this.recipeService.getRecipes();
+  }
+
+  onRecipeSelected(recipe: Recipe) {
+    
   }
 
 }

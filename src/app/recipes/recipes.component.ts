@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RecipeService } from '../shared/services/recipe.service';
 import { Recipe } from './recipes.model';
 
 @Component({
@@ -6,7 +7,7 @@ import { Recipe } from './recipes.model';
   template: `
     <div class="row">
       <div class="col-md-5">
-          <app-recipe-list (recipeWasSelected)="selectedRecipe = $event"></app-recipe-list>
+          <app-recipe-list></app-recipe-list>
       </div>
       <div class="col-md-7">
           <app-recipe-detail *ngIf="selectedRecipe; else infoText" [recipe]="selectedRecipe"></app-recipe-detail>
@@ -18,14 +19,19 @@ import { Recipe } from './recipes.model';
   `,
   styles: [`
     
-  `]
+  `],
+  // Providing service to component + child components
+  providers: [RecipeService]
 })
 export class RecipesComponent implements OnInit {
   selectedRecipe: Recipe;
 
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
+    this.recipeService.recipeSelected.subscribe((recipe: Recipe) => {
+      this.selectedRecipe = recipe;
+    });
   }
 
 }
