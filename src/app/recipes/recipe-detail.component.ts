@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RecipeService } from '../shared/services/recipe.service';
 import { Recipe } from './recipes.model';
 
@@ -21,8 +22,8 @@ import { Recipe } from './recipes.model';
           <button type="button" class="btn btn-primary dropdown-toggle">Manage Recipe <span class="caret"></span></button>
           <ul class="dropdown-menu">
             <li><a (click)="onAddToShoppingList()" style="cursor: pointer;">To Shopping List</a></li>
-            <li><a href="#">Edit Recipe</a></li>
-            <li><a href="#">Delete Recipe</a></li>
+            <li><a style="cursor: pointer;" (click)="onEditRecipe()">Edit Recipe</a></li>
+            <li><a style="cursor: pointer;">Delete Recipe</a></li>
           </ul>
         </div>
       </div>
@@ -45,11 +46,22 @@ import { Recipe } from './recipes.model';
   `]
 })
 export class RecipeDetailComponent implements OnInit {
-  @Input() recipe: Recipe;
+  recipe: Recipe;
+  id: number;
 
-  constructor(private recipeService: RecipeService) { }
+  constructor(private recipeService: RecipeService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    // Observable for changing parameters
+    this.route.params.subscribe((params: Params) => {
+      // '+' casts the string id into a number
+      this.id = +params['id'];
+      this.recipe = this.recipeService.getRecipe(this.id);
+    })
+  }
+
+  onEditRecipe() {
+    this.router.navigate(['edit'], {relativeTo: this.route});
   }
 
   onAddToShoppingList() {

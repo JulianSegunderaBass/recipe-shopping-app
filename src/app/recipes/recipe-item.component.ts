@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RecipeService } from '../shared/services/recipe.service';
 import { Recipe } from './recipes.model';
 
 @Component({
   selector: 'app-recipe-item',
   template: `
-    <a href="#" class="list-group-item clearfix" (click)="onSelected()">
+    <a [routerLink]="[index]" style="cursor: pointer;" class="list-group-item clearfix" routerLinkActive="active">
       <div class="pull-left">
         <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
         <p class="list-group-item-text">{{ recipe.description }}</p>
@@ -21,14 +20,9 @@ import { Recipe } from './recipes.model';
 })
 export class RecipeItemComponent implements OnInit {
   @Input() recipe: Recipe;
-
-  constructor(private recipeService: RecipeService) { }
+  @Input() index: number;
 
   ngOnInit(): void {
-  }
-
-  onSelected() {
-    this.recipeService.recipeSelected.emit(this.recipe);
   }
 
 }
