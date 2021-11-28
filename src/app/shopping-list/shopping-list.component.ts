@@ -11,7 +11,12 @@ import { ShoppingListService } from '../shared/services/shopping-list.service';
         <app-shopping-edit></app-shopping-edit>
         <hr>
         <ul class="list-group">
-          <a class="list-group-item" style="cursor: pointer;" *ngFor="let ingredient of ingredients">{{ ingredient.name }} {{ ingredient.amount }}</a>
+          <a 
+            class="list-group-item" 
+            style="cursor: pointer;" 
+            *ngFor="let ingredient of ingredients; let i = index"
+            (click)="onEditItem(i)"
+          >{{ ingredient.name }} {{ ingredient.amount }}</a>
         </ul>
       </div>
     </div>
@@ -31,6 +36,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.igChangeSub = this.slService.ingredientsChanged.subscribe((ingredients: Ingredient[]) => {
       this.ingredients = ingredients;
     })
+  }
+
+  onEditItem(index: number) {
+    this.slService.startedEditing.next(index);
   }
 
   ngOnDestroy(): void {
