@@ -23,7 +23,7 @@ import { Recipe } from './recipes.model';
           <ul class="dropdown-menu">
             <li><a (click)="onAddToShoppingList()" style="cursor: pointer;">To Shopping List</a></li>
             <li><a style="cursor: pointer;" (click)="onEditRecipe()">Edit Recipe</a></li>
-            <li><a style="cursor: pointer;">Delete Recipe</a></li>
+            <li><a style="cursor: pointer;" (click)="onDeleteRecipe()">Delete Recipe</a></li>
           </ul>
         </div>
       </div>
@@ -66,6 +66,10 @@ export class RecipeDetailComponent implements OnInit {
 
   onAddToShoppingList() {
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
+  }
+
+  onDeleteRecipe() {
+    this.recipeService.deleteRecipe(this.id);
   }
 
 }
