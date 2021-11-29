@@ -37,13 +37,14 @@ import { RecipeService } from '../shared/services/recipe.service';
                   id="imgPath"
                   formControlName="imagePath"
                   class="form-control"
+                  #imagePath
                 >
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-12">
-              <img src="" class="img-responsive">
+              <img [src]="imagePath.value" class="img-responsive">
             </div>
           </div>
           <div class="row">
@@ -83,7 +84,11 @@ import { RecipeService } from '../shared/services/recipe.service';
                   >
                 </div>
                 <div class="col-xs-2">
-                  <button type="button" class="btn btn-danger">X</button>
+                  <button 
+                    type="button" 
+                    class="btn btn-danger"
+                    (click)="onDeleteIngredient(i)"
+                  >X</button>
                 </div>
               </div>
               <hr>
@@ -157,6 +162,10 @@ export class RecipeEditComponent implements OnInit {
 
   onCancel() {
     this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  onDeleteIngredient(index: number) {
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
   }
 
   // Getter for ingredients form group
