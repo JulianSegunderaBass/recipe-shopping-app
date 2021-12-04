@@ -8,35 +8,43 @@ import { ShoppingListService } from "./shopping-list.service";
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
 
-  private recipes: Recipe[] = [
-    new Recipe(
-      'Adobong Manok', 
-      'Recipe for Adobong Manok', 
-      'https://www.unileverfoodsolutions.com.ph/dam/global-ufs/mcos/SEA/calcmenu/recipes/PH-recipes/chicken-&-other-poultry-dishes/adobo/main-header.jpg',
-      [
-        new Ingredient('Chicken', 6),
-        new Ingredient('Toyo', 6),
-        new Ingredient('Vinegar', 6),
-        new Ingredient('Water', 12)
-      ]
-    ),
-    new Recipe(
-      'Pancit Canton', 
-      'Recipe for Pancit Canton', 
-      'https://www.foxyfolksy.com/wp-content/uploads/2019/02/pancit-canton-640.jpg',
-      [
-        new Ingredient('Noodles', 6),
-        new Ingredient('Vegetables', 6),
-        new Ingredient('Liver', 6)
-      ]
-    )
-  ];
+  // private recipes: Recipe[] = [
+  //   new Recipe(
+  //     'Adobong Manok', 
+  //     'Recipe for Adobong Manok', 
+  //     'https://www.unileverfoodsolutions.com.ph/dam/global-ufs/mcos/SEA/calcmenu/recipes/PH-recipes/chicken-&-other-poultry-dishes/adobo/main-header.jpg',
+  //     [
+  //       new Ingredient('Chicken', 6),
+  //       new Ingredient('Toyo', 6),
+  //       new Ingredient('Vinegar', 6),
+  //       new Ingredient('Water', 12)
+  //     ]
+  //   ),
+  //   new Recipe(
+  //     'Pancit Canton', 
+  //     'Recipe for Pancit Canton', 
+  //     'https://www.foxyfolksy.com/wp-content/uploads/2019/02/pancit-canton-640.jpg',
+  //     [
+  //       new Ingredient('Noodles', 6),
+  //       new Ingredient('Vegetables', 6),
+  //       new Ingredient('Liver', 6)
+  //     ]
+  //   )
+  // ];
+
+  private recipes: Recipe[] = [];
 
   constructor(private slService: ShoppingListService) { }
 
   getRecipes() {
     // Returning a new array that's a copy of the original
     return this.recipes.slice();
+  }
+
+  setRecipes(recipes: Recipe[]) {
+    // Overwriting recipes with HTTP data
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
   }
 
   // Getting a recipe by id

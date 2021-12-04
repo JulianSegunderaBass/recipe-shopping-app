@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from "@angular/core";
+import { DataStorageService } from "../shared/services/data-storage.service";
 
 @Component({
   selector: 'app-header',
@@ -17,8 +18,8 @@ import { Component, EventEmitter, Output } from "@angular/core";
             <li class="dropdown" appDropdown>
               <a style="cursor: pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a style="cursor: pointer;">Save Data</a></li>
-                <li><a style="cursor: pointer;">Fetch Data</a></li>
+                <li><a style="cursor: pointer;" (click)="onSaveData()">Save Data</a></li>
+                <li><a style="cursor: pointer;" (click)="onFetchData()">Fetch Data</a></li>
               </ul>
             </li>
           </ul>
@@ -28,5 +29,14 @@ import { Component, EventEmitter, Output } from "@angular/core";
   `
 })
 export class HeaderComponent {
-  
+
+  constructor(private dataStorageService: DataStorageService) {}
+
+  onSaveData() {
+    this.dataStorageService.storeRecipes();
+  }
+
+  onFetchData() {
+    this.dataStorageService.fetchRecipes().subscribe();
+  }
 }

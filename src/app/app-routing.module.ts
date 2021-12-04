@@ -4,6 +4,7 @@ import { RecipeDetailComponent } from "./recipes/recipe-detail.component";
 import { RecipeEditComponent } from "./recipes/recipe-edit.component";
 import { RecipeStartComponent } from "./recipes/recipe-start.component";
 import { RecipesComponent } from "./recipes/recipes.component";
+import { RecipesResolverService } from "./shared/services/recipes-resolver.service";
 import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 
 // Routes
@@ -14,8 +15,8 @@ const appRoutes: Routes = [
     // For child routes, router outlet to be provided in RecipesComponent
     { path: '', component: RecipeStartComponent },
     { path: 'new', component: RecipeEditComponent },
-    { path: ':id', component: RecipeDetailComponent },
-    { path: ':id/edit', component: RecipeEditComponent }
+    { path: ':id', component: RecipeDetailComponent, resolve: [RecipesResolverService] },
+    { path: ':id/edit', component: RecipeEditComponent, resolve: [RecipesResolverService] }
   ] },
   { path: 'shopping-list', component: ShoppingListComponent }
 ]
